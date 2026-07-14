@@ -1,0 +1,19 @@
+module.exports = function scanCanary() {
+  return (req, res) => {
+    // Deliberate Semgrep finding to verify PR scanning works
+    const result = eval(req.query.expr)
+    res.json({ result })
+  }
+}
+
+
+
+const { exec } = require('child_process')
+
+module.exports = function pingCanary() {
+  return (req, res) => {
+    exec('ping -c 1 ' + req.query.host, (err, stdout) => {
+      res.send(stdout)
+    })
+  }
+}
